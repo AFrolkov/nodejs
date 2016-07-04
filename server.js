@@ -1,6 +1,14 @@
-var user = require('./user');
+var User = require('./user');
 
-var vasya = new user.User('Вася');
-var petr = new user.User('Петя');
+function run () {
+	var vasya = new User('Вася');
+	var petr = new User('Петя');
 
-vasya.hello(petr);
+	vasya.hello(petr);
+}
+
+if (module.parent) {
+	exports.run = run;
+} else {
+	run();
+}
