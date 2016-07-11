@@ -15,7 +15,7 @@ server.on('request', function(req, res){
 		res.end(parseUrl.query.message);
 	} else {
 		res.statusCode = 404;
-		res.end('page not found');
+		res.end('page not found!!');
 	}
 });
 
