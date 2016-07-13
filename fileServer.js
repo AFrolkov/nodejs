@@ -56,6 +56,7 @@ function sendFileSafe(filePath, res) {
 }
 
 function sendFile (filePath, res) {
+	//не совсем правильно, нужен поток
 	fs.readFile(filePath, function(err, data) {
 		if (err) {
 			res.statusCode = 500;
