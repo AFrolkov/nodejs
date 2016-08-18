@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <%- body %>
-    <%= body %>
-  </body>
-</html>
+<% layout('layout/page') -%>
+<% block('title', 'titleText! From block') -%>
+<% block('footer', 'footer from block') -%>
+
+<p class="lead">Всем привет!</p>

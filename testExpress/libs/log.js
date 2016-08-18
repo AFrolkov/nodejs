@@ -3,7 +3,7 @@ var env = require('../app').get('env');
 
 function getLogger(module) {
 
-	var path = module.filename.split('/').slice(-2).join('/');
+	var path = module.filename.split('\\').slice(-2).join('\\');
 
 	return new winston.Logger({
 		transports: [

@@ -4,8 +4,8 @@
  */
 
 var express = require('express');
-//var routes = require('./routes');
-//var user = require('./routes/user');
+var routes = require('./routes');
+var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var config = require('./config');
@@ -17,12 +17,13 @@ var log = require('./libs/log')(module);
 
 
 // all environments
-
+app.engine('ejs', require('ejs-locals'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
+app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(app.router);
@@ -37,14 +38,13 @@ app.get('/', routes.index);
 app.get('/users', user.list);*/
 
 app.get('/', function(req, res, next) {
-	res.render('index', {title: 'express', body: '<b>Hello express</b>'});
+	res.render('index', {title: 'хуй!'});
 });
 
-app.use(function(err, req, res, next) {
-	var err1 = express.errorHandler({showStack: true});
-	err1(err, req, res, next);
-});
+
 
 http.createServer(app).listen(config.get('port'), function(){
 	log.info('Express server listening on port ' + config.get('port'));
 });
+
+module.exports = app;
