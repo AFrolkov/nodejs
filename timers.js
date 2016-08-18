@@ -18,7 +18,7 @@ var fs = require('fs');
 		new Date();
 	}*/
 		setImmediate(function(){
-			console.log('setImmediate2');
+			console.log('setImmediate2222');
 		});
 	});
 
