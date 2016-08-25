@@ -24,21 +24,21 @@ MongoClient.connect('mongodb://127.0.0.1/test', function(err, db) {
 	});
 });*/
 
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+var User = require('./models/user').User;
 
-var schema = mongoose.Schema({
-	name: String
-});
+/*var user = new User({
+	username: 'Frolkov',
+	password: 'secret'
+})
 
-schema.methods.meow = function () {
-	console.log(this.get('name'));
-};
+user.save(function(err, user, affected) {
+	if (err) {
+		throw err;
+	}
 
-var Cat = mongoose.model('Cat', schema);
+	console.log('done');
+});*/
 
-var kitty = new Cat({name: 'Iriska'});
-
-kitty.save(function(err, kitty, aff) {
-	kitty.meow();
+User.findOne({username: 'Frolkov'}, function(err, data) {
+	console.log(data);
 });
