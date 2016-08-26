@@ -1,7 +1,7 @@
 {
 	"port": 3333,
 	"mongoose": {
-		"uri": "mongodb://localhost/users1",
+		"uri": "mongodb://localhost/users",
 		"options": {
 			"server": {
 				"socketOptions": {
