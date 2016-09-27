@@ -46,5 +46,3 @@ app.get('/', function(req, res, next) {
 http.createServer(app).listen(config.get('port'), function(){
 	log.info('Express server listening on port ' + config.get('port'));
 });
-
-module.exports = app;

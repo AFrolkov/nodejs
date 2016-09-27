@@ -52,23 +52,49 @@ var mongoose = require('./libs/mongoose');
 var async = require('async');
 mongoose.set('debug', true);
 
-mongoose.connection.on('open', function() {
-	mongoose.connection.db.dropDatabase(function(err) {
-		if (err) throw err;
-		console.log('droped');
+function open(callback) {
+	mongoose.connection.on('open', callback);
+}
 
-		require('./models/user');
+function dropDatabase(callback) {
+	mongoose.connection.db.dropDatabase(callback);
+}
 
-		async.parallel([
-			function(callback) {
-				var artem = new mongoose.models.User({username: "Artem", password: "123"});
-				artem.save(function(err) {
-					callback(err, artem);
-				});
-			}
-			], function(err, results) {
-			console.log(arguments)
-		});
+function requireModels(callback) {
+	//чтобы создание индекса (username unique)
+	//происходило после dropDatabase
+	require('./models/user');
 
-	});
+	async.each(Object.keys(mongoose.models), function(modelName, callback) {
+		mongoose.models[modelName].ensureIndexes(callback);
+	}, callback);
+}
+
+function createUsers(callback) {
+	var users = [
+		{username: 'art1', password: 'pass'},
+		{username: 'art1', password: 'pass'},
+		{username: 'art3', password: 'pass'}
+	];
+
+	async.each(users, function(user, callback) {
+		var newUser = mongoose.models.User(user);
+		newUser.save(callback);
+	}, callback);
+
+}
+
+function close(callback) {
+	mongoose.disconnect(callback);
+}
+
+async.series([
+	open,
+	dropDatabase,
+	requireModels,
+	createUsers,
+	close
+], function(err, res) {
+	mongoose.disconnect();
+	console.log(arguments);
 });
